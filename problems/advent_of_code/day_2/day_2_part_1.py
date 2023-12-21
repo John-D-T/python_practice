@@ -24,6 +24,8 @@ Breakdown:
 Note: this would be g x r time complexity (number of games x number of rounds)
 
 Improvement: Could instead iterate through the round, obtain the max, then compare to the max values
+
+Soln: 2369
 """
 
 def determine_plausible_games(max_cubes, games):
@@ -72,7 +74,6 @@ if __name__ == "__main__":
     }
 
     with open('day_2_input.txt') as f:
-        # lines = f.readlines()
         lines = f.read().splitlines()
 
     valid_total = determine_plausible_games(max_cubes=max_cubes, games=lines)
