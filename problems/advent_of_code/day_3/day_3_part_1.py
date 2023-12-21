@@ -36,6 +36,25 @@ Soln: what I have: 514745
 """
 
 
+def matrix_check(line, row_num, start_of_number, end_of_number, number, valid_parts, first_row=False, last_row=False):
+    left_edge = max(0, start_of_number - 1)
+    right_edge = min(len(line) - 1, end_of_number + 1)
+
+    neighbours = matrix[row_num][left_edge: right_edge]
+
+    if not first_row:
+        neighbours += matrix[row_num - 1][left_edge: right_edge]
+
+    if not last_row:
+        neighbours += matrix[row_num + 1][left_edge: right_edge]
+
+    if any((i != '.') and (not i.isnumeric()) for i in neighbours):
+        valid_parts += int(number)
+
+    number = ''
+
+    return valid_parts, number
+
 def sum_part_numbers(matrix):
     valid_parts = 0
 
@@ -55,38 +74,19 @@ def sum_part_numbers(matrix):
                     end_of_number = position
 
                     if row_num == 0:
-                        # deal with situation where start_of_number and end_of_number are at the edge (so +1 and -1 causes an error)
-                        neighbours = matrix[row_num+1][start_of_number - 1: end_of_number + 1] + \
-                                     matrix[row_num][start_of_number - 1: end_of_number + 1]
-                        if any((i != '.') and (not i.isnumeric()) for i in neighbours):
-                            valid_parts += int(number)
-                        else:
-                            pass
-
-                        number = ''
+                        valid_parts, number = matrix_check(line=line, row_num=row_num,
+                                                           start_of_number=start_of_number, end_of_number=end_of_number,
+                                                           number=number, valid_parts=valid_parts, first_row=True)
 
                     elif row_num != len(matrix) - 1:
-                        neighbours = matrix[row_num - 1][start_of_number - 1: end_of_number + 1] + \
-                                     matrix[row_num + 1][start_of_number - 1: end_of_number + 1] + \
-                                     matrix[row_num][start_of_number - 1: end_of_number + 1]
-
-                        if any((i != '.') and (not i.isnumeric()) for i in neighbours):
-                            valid_parts += int(number)
-                        else:
-                            pass
-
-                        number = ''
+                        valid_parts, number = matrix_check(line=line, row_num=row_num,
+                                                           start_of_number=start_of_number, end_of_number=end_of_number,
+                                                           number=number, valid_parts=valid_parts)
 
                     elif row_num == len(matrix) - 1:
-                        neighbours = matrix[row_num-1][start_of_number - 1: end_of_number + 1] + \
-                                     matrix[row_num][start_of_number - 1: end_of_number + 1]
-                        if any((i != '.') and (not i.isnumeric()) for i in neighbours):
-                            valid_parts += int(number)
-                        else:
-                            pass
-
-                        number = ''
-
+                        valid_parts, number = matrix_check(line=line, row_num=row_num,
+                                                           start_of_number=start_of_number, end_of_number=end_of_number,
+                                                           number=number, valid_parts=valid_parts, last_row=True)
 
                 else:
                     pass
@@ -96,7 +96,7 @@ def sum_part_numbers(matrix):
 
 if __name__ == '__main__':
 
-    with open("day_3_sample.txt") as f:
+    with open("day_3_input.txt") as f:
         files = f.read().splitlines()
         matrix = [file for file in files]
 
