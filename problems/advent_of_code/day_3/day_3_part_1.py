@@ -51,6 +51,8 @@ def matrix_check(line, row_num, start_of_number, end_of_number, number, valid_pa
     if any((i != '.') and (not i.isnumeric()) for i in neighbours):
         valid_parts += int(number)
 
+        print(int(number))
+
     number = ''
 
     return valid_parts, number
@@ -67,8 +69,9 @@ def sum_part_numbers(matrix):
             character = line[position]
             if character.isnumeric():
                 number += character
-            else:
-                # skip if it's a period/symbol
+            if not character.isnumeric():
+                # skip if we don't have a number yet
+                # TODO - figure out how to handle 893
                 if number != '':
                     start_of_number = position - len(number)
                     end_of_number = position
