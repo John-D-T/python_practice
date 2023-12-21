@@ -11,57 +11,68 @@ then add all these together
 idea:
     set variable sum_calibration to 0
     loop through each string
-        then place right and left pointers
-            check if the value is a number
-                if it is:
-                    add to list
-                    (don't need to do anything to 'potential_worded_number' since it's useless for that pointer now
+        DON'T use right and left pointers. Go through the string sequentially and use regex!
 
-                if not:
-                    append to a variable called 'potential_worded_number'
-                        for left, we append to the back. For right, we append from the front
-                    check if the 'potential_worded_number' exists in our hashmap. Return the integer value this equates to
-                        hash map is fine since we're dealing with single digits.
-                    move the pointer
+        create a regex list
 
-    form a digit with this, and append to sum_calibration
+        create a dictionary with word: number
 
-    note: if left = right (only one digit), then return that number twice as a 2-digit number
+        search the whole string for anything which matches the regex list
+
+        then loop through the list of strings
+            if they match the dictionary, return the integer value
+
+        then find the last and first numbers
+            form a digit with this, and append to sum_calibration
 
     return sum_calibration
 """
-
+import re
 
 def generate_calibration(list_of_alphanumerics):
 
     sum_calibration = 0
 
+    search_pattern = re.compile(r'(?:\d|zero|one|two|three|four|five|six|seven|eight|nine)')
+
+    number_hashMap = {
+        "one": "1",
+        "two": "2",
+        "three": "3",
+        "four": "4",
+        "five": "5",
+        "six": "6",
+        "seven": "7",
+        "eight": "8",
+        "nine": "9"
+    }
+
+    cleaning_hashMap = {
+        "one": "o1e",
+        "two": "t2o",
+        "three": "t3e",
+        "four": "f4r",
+        "five": "f5e",
+        "six": "s6x",
+        "seven": "s7n",
+        "eight": "e8t",
+        "nine": "n9e"
+    }
+
     for line_of_text in list_of_alphanumerics:
-        print('dealing with:' + line_of_text)
-        lp = 0
-        rp = len(line_of_text) - 1
+        for number in cleaning_hashMap:
+            line_of_text = line_of_text.replace(number, cleaning_hashMap[number])
 
-        right_status = False
-        left_status = False
+        nums = search_pattern.findall(line_of_text)
 
-        while right_status is False or left_status is False:
-            if line_of_text[lp].isnumeric():
-                left_status = True
-            else:
-                lp += 1
+        for i in range(len(nums)):
+            if nums[i] in number_hashMap.keys():
+                nums[i] = number_hashMap[i]
 
-            if line_of_text[rp].isnumeric():
-                right_status = True
+        value = nums[0] + nums[-1]
 
-            else:
-                rp -= 1
+        sum_calibration += int(value)
 
-        # else:
-        two_digit_string = f"{line_of_text[lp]}{line_of_text[rp]}"
-        value = int(two_digit_string)
-
-        print(f"value is {value}")
-        sum_calibration += value
 
     return sum_calibration
 

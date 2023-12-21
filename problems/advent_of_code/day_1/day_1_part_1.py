@@ -18,6 +18,8 @@ idea:
     note: if left = right (only one digit), then return that number twice as a 2-digit number
 
     return sum_calibration
+
+    SOLN: 53334
 """
 
 
@@ -26,7 +28,6 @@ def generate_calibration(list_of_alphanumerics):
     sum_calibration = 0
 
     for line_of_text in list_of_alphanumerics:
-        print('dealing with:' + line_of_text)
         lp = 0
         rp = len(line_of_text) - 1
 
