@@ -28,7 +28,7 @@ Loop through the numbers:
 
 return total points
 
-Soln: 1131 (too low)
+Soln: 15268
 """
 
 
