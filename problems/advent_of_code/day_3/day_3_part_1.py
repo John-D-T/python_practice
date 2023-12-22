@@ -32,7 +32,7 @@ for each row, have a left and right pointer to figure out the width of a number
 
 then return valid_parts
 
-Soln: what I have: 514745
+Soln: 520135
 """
 
 
@@ -101,7 +101,7 @@ if __name__ == '__main__':
 
     with open("day_3_input.txt") as f:
         files = f.read().splitlines()
-        matrix = [file for file in files]
+        matrix = [file + '.' for file in files]
 
     valid_parts = sum_part_numbers(matrix=matrix)
 
