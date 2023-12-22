@@ -34,10 +34,19 @@ return 'valid_parts'
 
 
 
-Soln:
+Soln: (72514855 - too low)
 """
-
 import re
+
+def edge_adjustment(row_num, left_edge, right_edge):
+    # add a while loop to extend the box (while the edges are numeric)
+    while matrix[row_num][left_edge].isnumeric():
+        left_edge -= 1
+
+    while matrix[row_num][right_edge].isnumeric():
+        right_edge += 1
+
+    return left_edge, right_edge
 
 def matrix_check(line, row_num, position, valid_parts, first_row=False, last_row=False):
 
@@ -45,15 +54,21 @@ def matrix_check(line, row_num, position, valid_parts, first_row=False, last_row
     left_edge = max(0, position - 1)
     right_edge = min(len(line) - 1, position + 1)
 
-    neighbours = matrix[row_num][left_edge: right_edge]
+    custom_left_edge, custom_right_edge = edge_adjustment(row_num=row_num, left_edge=left_edge, right_edge=right_edge)
+
+    neighbours = matrix[row_num][custom_left_edge: custom_right_edge]
     neighbours_numbers = re.findall('\d+', neighbours)
 
     if not first_row:
-        neighbours_below = matrix[row_num - 1][left_edge: right_edge]
+        custom_left_edge, custom_right_edge = edge_adjustment(row_num=row_num - 1, left_edge=left_edge, right_edge=right_edge)
+
+        neighbours_below = matrix[row_num - 1][custom_left_edge: custom_right_edge]
         neighbours_numbers += re.findall('\d+', neighbours_below)
 
     if not last_row:
-        neighbours_above = matrix[row_num + 1][left_edge: right_edge]
+        custom_left_edge, custom_right_edge = edge_adjustment(row_num=row_num + 1, left_edge=left_edge, right_edge=right_edge)
+
+        neighbours_above = matrix[row_num + 1][custom_left_edge: custom_right_edge]
         neighbours_numbers += re.findall('\d+', neighbours_above)
 
     # count number of unique numbers in each of these rows
