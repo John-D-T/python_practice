@@ -70,8 +70,6 @@ def sum_part_numbers(matrix):
             if character.isnumeric():
                 number += character
             if not character.isnumeric():
-                # skip if we don't have a number yet
-                # TODO - figure out how to handle 893
                 if number != '':
                     start_of_number = position - len(number)
                     end_of_number = position
