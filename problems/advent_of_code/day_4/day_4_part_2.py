@@ -14,6 +14,8 @@ Soln: 6283755
 
 Time taken: 23 seconds
 
+# TODO - consider creating a hashmap counting the number of scratchcards, instead of appending to the 'card_matrix' variable
+
 """
 
 import datetime
