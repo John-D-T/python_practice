@@ -32,26 +32,27 @@ class Solution(object):
             # retrieve the max depth for both subtrees
             if node.left:
                 while local_left_max:
-                    else:
                     node, depth = local_left_max.popleft()
 
-        if node.right:
-            while local_right_max:
-                else:
-                node, depth = local_right_max.popleft()
+                    # append
 
-    # add these up to form the local_max
-    local_max = local_left_max + local_right_max
+            if node.right:
+                while local_right_max:
+                    node, depth = local_right_max.popleft()
 
-    # append [local_max] to the stack
-    if stack:
-        current_max = stack.pop()
-        stack.append(max(current_max, local_max))
-    else:
-        stack.append(local_max)
+            # add these up to form the local_max
+            local_max = local_left_max + local_right_max
 
-    # append the subtrees to the queue
-    if node.left:
-        queue.append([node.left])
-    if node.right:
-        queue.append([node.right])
+            # append [local_max] to the stack
+            if stack:
+                current_max = stack.pop()
+                stack.append(max(current_max, local_max))
+            else:
+                stack.append(local_max)
+
+            # append the subtrees to the queue, until we have no more nodes to explore
+            # TODO - maybe can perform a node check instead of a node.left check. may need to refactor other code
+            if node.left:
+                queue.append([node.left])
+            if node.right:
+                queue.append([node.right])
