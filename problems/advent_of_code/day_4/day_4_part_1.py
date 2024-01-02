@@ -28,7 +28,7 @@ Loop through the numbers:
 
 return total points
 
-Soln: 1131 (too low)
+Soln: 15268
 """
 
 
@@ -55,7 +55,8 @@ def calculate_total_points(card_matrix):
                 if winning_hashMap.get(number) <= 0:
                     del winning_hashMap[number]
 
-        exponential_counter = 2 ** (counter - 1)
+        # the if statement handles situations where the counter is 0 (hence minusing from your total)
+        exponential_counter = 2 ** (counter - 1) if counter > 0 else 0
 
         total_points += exponential_counter
 
