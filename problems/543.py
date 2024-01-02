@@ -31,13 +31,16 @@ class Solution(object):
 
             # retrieve the max depth for both subtrees
             if node.left:
-                while local_left_max:
+                while local_left_stack:
                     node, depth = local_left_max.popleft()
 
-                    # append
+                    # have an if node check
+                    # if it's populated, then we consider it's depth in the local_left_max variable
+
+                    # append left and right to the local_left_stack
 
             if node.right:
-                while local_right_max:
+                while local_right_stack:
                     node, depth = local_right_max.popleft()
 
             # add these up to form the local_max
