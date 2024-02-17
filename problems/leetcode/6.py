@@ -16,3 +16,6 @@ class Solution:
 # this means the first row will be the 1st, (numRows + (numRows-2) + 1)th, (2numRows + 2(numRows-2) + 1)th
 # second row will be the 2nd, numRows + 2, 2numRows + 2(2)
 
+# can i create a bunch of categorizations in a hashmap:
+    # e.g. {row_1: [PIN]}
+    #      {row_2: [ALSING]}
