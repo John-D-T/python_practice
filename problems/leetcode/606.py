@@ -11,10 +11,8 @@ class Solution:
 
             if root.left:
                 left_exp = "(" + explore(root=root.left) + ")"
-                right_exp = "()"
             else:
                 left_exp = ""
-                right_exp = ""
 
             if root.right:
                 right_exp = "(" + explore(root=root.right) + ")"
