@@ -2,40 +2,45 @@ class Solution:
     def candy(self, ratings):
         min_candy = [1] * len(ratings)
 
-        sign_list_l_r = []
+        l_to_r_list = []
 
-        for i, rating in enumerate(ratings):
+        r_to_l_list = []
+        # generate l to r list
+        for i in range(len(ratings)):
             if i == 0:
-                sign_list_l_r.append('+')
-            elif ratings[i] < ratings[i - 1]:
-                sign_list_l_r.append('-')
-            elif ratings[i] == ratings[i - 1]:
-                sign_list_l_r.append('=')
+                l_to_r_list.append('=')
             elif ratings[i] > ratings[i - 1]:
-                sign_list_l_r.append('+')
+                l_to_r_list.append('+')
+            elif ratings[i] <= ratings[i - 1]:
+                l_to_r_list.append('=')
 
-        print(sign_list_l_r)
+        # generate r to l list
+        for i in range(len(ratings)):
+            if i == len(ratings) - 1:
+                r_to_l_list.append('=')
+            elif ratings[i] > ratings[i + 1]:
+                r_to_l_list.append('+')
+            elif ratings[i] == ratings[i + 1]:
+                r_to_l_list.append('=')
+            elif ratings[i] < ratings[i + 1]:
+                r_to_l_list.append('-')
 
-        for i in range(len(min_candy) - 1):
+        # work from l to r
+        for i in range(len(ratings)):
             if i == 0:
                 pass
-            elif sign_list_l_r[i + 1] == '-':
-                pass
-            elif sign_list_l_r[i + 1] == '+':
-                min_candy[i + 1] = min_candy[i] + 1
-            elif sign_list_l_r[i + 1] == '=':
-                pass
+            elif l_to_r_list[i] == '+':
+                min_candy[i] = min_candy[i - 1] + 1
 
-        for i in range(len(min_candy) - 1, -1, -1):
+        # work from r to l
+        for i in range(len(ratings) - 1, -1, -1):
             if i == len(ratings) - 1:
                 pass
-            elif (ratings[i] < ratings[i - 1]) and (min_candy[i] >= min_candy[i - 1]):
-                min_candy[i] = min_candy[i - 1] + 1
-            elif ratings[i] == ratings[i - 1]:
-                pass
-            elif ratings[i] < ratings[i - 1]:
-                pass
-
+            elif r_to_l_list[i] == '+':
+                min_candy[i] = min_candy[i + 1] + 1
+                # this is to catch situations where the candy increases, but not by enough
+                if i != 0:
+                    if (r_to_l_list[i - 1] == '-') and (min_candy[i - 1] >= min_candy[i]):
+                        min_candy[i] = min_candy[i - 1] + 1
         print(min_candy)
         return sum(min_candy)
-
